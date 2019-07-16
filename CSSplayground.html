@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+  <link href="style.css" rel="stylesheet" type="text/css">  
+</head>
+
+<body>
+  <div class="clock">
+    <div class="center"></div>
+    <div class="mili-clock">
+      <div class="mili-hand"></div>
+    </div>
+    <div class="second-hand"></div>
+    <div class="minute-hand"></div>
+    <div class="hour-hand"></div>
+    <div class="number" data-number="12">12</div>
+    <div class="number" data-number="3">3</div>
+    <div class="number" data-number="6">6</div>
+    <div class="number" data-number="9">9</div>
+  </div>
+  <div class="key">
+    <div class="head"></div>
+    <div class="hole"></div>
+    <div class="body"></div>
+    <div class="divit" data-position='1'></div>
+    <div class="divit" data-position='2'></div>
+    <div class="divit" data-position='3'></div>
+    <div class="divit" data-position='4'></div>
+  </div>
+
+  <img src="https://www.easykeys.com/Images/Keys_Cut/chicago/chicago_1250-1499_cut_key_large.png">
+  <script src="" async defer></script>
+  <script>
+    const second = document.getElementsByClassName("second-hand")[0]
+    const minute = document.getElementsByClassName("minute-hand")[0]
+    const hour = document.getElementsByClassName("hour-hand")[0]
+    const mili = document.getElementsByClassName("mili-hand")[0]
+
+    const move = (hand, angle, translate) => {
+      hand.style.transform = "rotate(" + (angle - 90) + "deg) translate(" + translate + "px)"
+    }
+
+    const getSecondAngle = (date) => {
+      return (6 * date.getSeconds()) + (.006 * date.getMilliseconds())
+    }
+
+    const getMinuteAngle = (date) => {
+      return (6 * date.getMinutes()) + (.0167 * getSecondAngle(date))
+    }
+
+    const getHourAngle = (date) => {
+      return (30 * date.getHours()) + (.0833 * getMinuteAngle(date))
+    }
+    let date = new Date()
+    setInterval(() => {
+      date = new Date()
+      move(second, getSecondAngle(date), 30)
+      move(minute, getMinuteAngle(date), 30)
+      move(hour, getHourAngle(date), 20)
+      move(mili, .360 * date.getMilliseconds(), 10)
+      // second.style.transform = "rotate("+ ((6 * date.getSeconds()) - 90) + "deg) translate(30px)"
+      // minute.style.transform = "rotate("+ ((6 * date.getMinutes()) - 90) + "deg) translate(30px)"
+      // hour.style.transform = "rotate("+ ((30 * date.getHours()) - 90) + "deg) translate(20px)"
+    }, 1);
+  </script>
+</body>
+
+</html>
