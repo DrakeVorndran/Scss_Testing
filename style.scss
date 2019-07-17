@@ -1,0 +1,125 @@
+/* Key css */
+.key {
+  position: relative;
+  height: 100px;
+  width: 200px;
+  background: transparent;
+}
+
+.key>.head {
+  position: relative;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  background-color: gold;
+}
+
+.key>.hole {
+  position: absolute;
+  top: 40px;
+  left: 15px;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: white;
+}
+
+.key>.body {
+  position: absolute;
+  height: 30px;
+  width: 150px;
+  top: 35px;
+  right: 0px;
+  border-radius: 0px 100px 100px 0px;
+  background: gold;
+}
+
+.key>.divit {
+  position: absolute;
+  height: 0px;
+  width: 10px;
+  border-top: 10px solid white;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+
+@for $i from 1 through 4 {
+  .key>.divit:nth-last-child(#{$i}) {
+    top: (((($i + 1) % 2) * 5)+30)+px;
+    right: ((25 * $i) - 20)+px;
+  }
+}
+
+/* Clock css */
+@mixin hand($height, $width, $color) {
+  position: absolute;
+  height: $height;
+  width: $width;
+  background-color: $color;
+  top: calc(calc(100% / 2) - (#{$height} / 2));
+  left: calc(calc(100% / 2) - (#{$width} / 2));
+  border-radius: 50px;
+}
+
+$numbers: 12,3,9,6;
+.clock {
+  position: relative;
+  height: 200px;
+  width: 200px;
+  background: lightgoldenrodyellow;
+  border-radius: 100%;
+  border: 10px gold solid;
+}
+
+.clock > {
+  .center {
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    background: gold;
+    top: 87.5px;
+    left: 87.5px;
+  }
+
+  .minute-hand {
+    @include hand(8px, 120px, black);
+  }
+
+  .second-hand {
+    @include hand(4px, 120px, red);
+  }
+
+  .hour-hand {
+    @include hand(10px, 90px, black);
+  }
+
+  .mili-clock > .mili-hand {
+    @include hand(4px, 20px, red);
+  }
+
+  .mili-clock {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    border: gold 3px solid;
+    border-radius: 50%;
+    top: 120px;
+    left: 78px;
+  }
+
+  .number {
+    position: absolute;
+    font-size: 2em;
+    top: calc(100px - .55em);
+    left: calc(100px - .4em);
+    color: black;
+  }
+
+  @each $number in $numbers {
+    .number[data-number="#{$number}"] {
+      transform: rotate((((360 / 12) * $number) - 90) + deg) translate(80px) rotate(((((360 / 12) * $number) - 90) * -1) + deg)
+    }
+  }
+}
+
